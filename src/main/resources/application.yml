@@ -1,7 +1,6 @@
 server:
   error:
     include-stacktrace: on_param
-
 spring:
   application:
     name: springBoot

@@ -1,15 +1,29 @@
 package academy.WS.modules.factory.controller
 
+import academy.WS.modules.factory.domain.Factory
 import academy.WS.modules.factory.service.FactoryService
 import lombok.RequiredArgsConstructor
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping( "/api/factory")
 @RequiredArgsConstructor
-class FactoryController {
+@RequestMapping(path = ["/api/factory"])
+class FactoryController(val factoryService: FactoryService) {
 
-    lateinit var factoryService: FactoryService
+
+    @PostMapping(path = ["/save"])
+    fun save(@RequestBody factory: Factory):ResponseEntity<Factory>{
+        return ResponseEntity(factoryService.save(factory), HttpStatus.CREATED)
+    }
+
+    @DeleteMapping(path = ["/delete/{id}"])
+    fun delete(@PathVariable id:Int):ResponseEntity<Void>{
+        factoryService.delete(id)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
+
 
 }
