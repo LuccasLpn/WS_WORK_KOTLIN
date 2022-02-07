@@ -14,6 +14,4 @@ data class Factory(
     var name: String,
     var countryCode: Long
 
-
-
     )

@@ -1,0 +1,22 @@
+version: '2.4'
+x-database-variables: &database-variables
+  SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/Login?&createDatabaseIfNotExist=true
+  SPRING_DATASOURCE_USERNAME: root
+  SPRING_DATASOURCE_PASSWORD: root
+
+services:
+  db:
+    image: mysql
+    container_name: wswork
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - wswork_data:/var/lib/mysql
+    mem_limit: 512m
+volumes:
+  wswork_data:
+
+
+
