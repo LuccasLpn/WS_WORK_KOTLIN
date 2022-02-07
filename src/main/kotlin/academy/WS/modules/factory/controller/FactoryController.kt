@@ -14,14 +14,25 @@ class FactoryController(val factoryService: FactoryService) {
 
 
     @PostMapping(path = ["/save"])
-    fun save(@RequestBody factory: Factory):ResponseEntity<Factory>{
+    fun save(@RequestBody factory: Factory) : ResponseEntity < Factory >{
         return ResponseEntity(factoryService.save(factory), HttpStatus.CREATED)
     }
 
     @DeleteMapping(path = ["/delete/{id}"])
-    fun delete(@PathVariable id:Int):ResponseEntity<Void>{
+    fun delete(@PathVariable id : Int) : ResponseEntity < Void >{
         factoryService.delete(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
+    @GetMapping(path = ["/findAll"])
+    fun findAll() : ResponseEntity < List < Factory >>{
+        return ResponseEntity(factoryService.findAll(),HttpStatus.OK)
+    }
+
+    @GetMapping(path = ["/findByName"])
+    @ResponseBody
+    fun findByName(@RequestParam name : String) : ResponseEntity<List<Factory>>{
+        return ResponseEntity(factoryService.findByName(name), HttpStatus.OK)
     }
 
 

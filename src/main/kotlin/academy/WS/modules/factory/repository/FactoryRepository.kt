@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository
 @Repository
 interface FactoryRepository : JpaRepository<Factory, Int> {
 
+    fun findByNameIgnoreCase( name : String):List<Factory>
 }

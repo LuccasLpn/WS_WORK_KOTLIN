@@ -20,9 +20,13 @@ class FactoryService (val factoryRepository: FactoryRepository){
         return factoryRepository.findById(id)
             .orElseThrow { ValidationException("Factory not Found") }
     }
-    
+
     fun findAll():MutableList<Factory>{
         return factoryRepository.findAll();
+    }
+
+    fun findByName(name:String): List < Factory >{
+        return factoryRepository.findByNameIgnoreCase(name);
     }
 
 }
