@@ -10,9 +10,9 @@ import com.univocity.parsers.common.record.Record
 import com.univocity.parsers.csv.CsvParser
 import com.univocity.parsers.csv.CsvParserSettings
 import org.springframework.stereotype.Service
+import org.springframework.util.ObjectUtils
 import org.springframework.web.multipart.MultipartFile
 import java.io.IOException
-import java.util.ArrayList
 import java.util.function.Consumer
 import javax.xml.bind.ValidationException
 
@@ -22,6 +22,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
 
 
     fun save(carPost: CarPost): Car{
+        validateCarInformed(carPost)
         val factoryId = carPost.factoryId?.let { factoryService.findByIdOrThrowBadRequestException(it) }
         val car = CarMapper.INSTANCE.toPost(carPost)
         if (factoryId != null) {
@@ -29,6 +30,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         }
         return carRepository.save(car)
     }
+
     fun update(carPut: CarPut): Car{
         val savedCar = carPut.id?.let { findByIdOrThrowBadRequestException(it) }
         val  factory = carPut.factoryId?.let { factoryService.findByIdOrThrowBadRequestException(it) }
@@ -39,7 +41,6 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         }
         return carRepository.save(car)
     }
-
     fun upload(file: MultipartFile): String{
         return try {
             val carList: MutableList<Car> = ArrayList()
@@ -73,6 +74,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         return carRepository.delete(findByIdOrThrowBadRequestException(id))
     }
 
+
     fun findByIdOrThrowBadRequestException(id: Int): Car{
         return carRepository.findById(id)
             .orElseThrow { ValidationException("Car not Found") }
@@ -80,6 +82,30 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
 
     fun findAll():MutableList<Car>{
         return carRepository.findAll()
+    }
+
+
+    private fun validateCarInformed(request: CarPost){
+        if (ObjectUtils.isEmpty(request.doors)){
+            throw ValidationException("The Car Doors Was Not Informed")
+        }
+
+        if (ObjectUtils.isEmpty(request.color)){
+            throw ValidationException("The Car Color Was Not Informed")
+        }
+
+        if (ObjectUtils.isEmpty(request.cost)){
+            throw ValidationException("The Car Cost Was Not Informed")
+        }
+
+        if (ObjectUtils.isEmpty(request.year)){
+            throw ValidationException("The Car Year Was Not Informed")
+        }
+
+        if (ObjectUtils.isEmpty(request.fuel)){
+            throw ValidationException("The Car Fuel Was Not Informed")
+        }
+
     }
 
 

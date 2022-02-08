@@ -24,7 +24,6 @@ class CarController(val carService: CarService) {
         return ResponseEntity(carService.save(carPost), HttpStatus.CREATED)
     }
 
-
     @PutMapping(path = ["/update"])
     fun update(@RequestBody carPut: CarPut): ResponseEntity<Car>{
         return ResponseEntity(carService.update(carPut), HttpStatus.NO_CONTENT)
@@ -50,4 +49,8 @@ class CarController(val carService: CarService) {
         }
     }
 
+    @GetMapping(path = ["/findById/{id}"])
+    fun findById(@PathVariable id: Int): ResponseEntity<Car>{
+        return ResponseEntity.ok(carService.findByIdOrThrowBadRequestException(id))
+    }
 }
