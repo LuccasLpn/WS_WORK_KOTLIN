@@ -1,6 +1,4 @@
-import org.jetbrains.kotlin.fir.expressions.FirEmptyArgumentList.arguments
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
 plugins {
 
@@ -28,6 +26,7 @@ repositories {
 
 dependencies {
 
+	implementation("org.springframework.boot:spring-boot-devtools:2.6.3")
 	implementation(kotlin("stdlib-jdk8"))
 	implementation("org.mapstruct:mapstruct:1.5.0.Beta2")
 	kapt("org.mapstruct:mapstruct-processor:1.5.0.Beta2")

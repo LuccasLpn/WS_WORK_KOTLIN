@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository
 interface CarRepository: JpaRepository<Car, Int> {
 
     fun findByCost(coost: Double): List<Car>
+    fun findByColorIgnoreCase(cor: String): List<Car>
 
 }

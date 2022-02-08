@@ -58,4 +58,10 @@ class CarController(val service: CarService) {
     fun findByCost(@PathVariable cost: Double): ResponseEntity<List<Car>>{
         return ResponseEntity(service.findByCost(cost),HttpStatus.OK)
     }
+
+    @GetMapping(path = ["/findByCor/{cor}"])
+    fun findByCor(@PathVariable cor: String): ResponseEntity<List<Car>>{
+        return ResponseEntity(service.findByCor(cor),HttpStatus.OK)
+    }
+
 }

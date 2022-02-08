@@ -89,6 +89,10 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         return carRepository.findByCost(cost)
     }
 
+    fun findByCor(cor: String): List<Car>{
+        return carRepository.findByColorIgnoreCase(cor)
+    }
+
 
     private fun validateCarInformed(request: CarPost){
         if (ObjectUtils.isEmpty(request.doors)){
