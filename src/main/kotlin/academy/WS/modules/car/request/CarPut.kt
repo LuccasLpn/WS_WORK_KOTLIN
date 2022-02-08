@@ -9,15 +9,12 @@ class CarPut {
             savedFactory.id
         }
     }
-
     var factoryId: Int? = null
         get(){ return field }
         set(value) { field = value }
-
     var id: Int? = null
         get(){ return field }
         set(value) { field = value }
-
     var model: String? = null
     var year: Int? = null
     var fuel: String? = null

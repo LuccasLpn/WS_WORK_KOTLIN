@@ -24,7 +24,6 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
     }
 
     fun update(carPut: CarPut): Car{
-
         val savedCar = carPut.id?.let { findByIdOrThrowBadRequestException(it) }
         val  factory = carPut.factoryId?.let { factoryService.findByIdOrThrowBadRequestException(it) }
         val car = CarMapper.INSTANCE.toPut(carPut)

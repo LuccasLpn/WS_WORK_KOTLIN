@@ -27,4 +27,15 @@ class CarController(val carService: CarService) {
         return ResponseEntity(carService.update(carPut), HttpStatus.NO_CONTENT)
     }
 
+    @GetMapping(path = ["/findAll"])
+    fun findAll() :ResponseEntity<List<Car>>{
+        return ResponseEntity(carService.findAll(),HttpStatus.OK)
+    }
+
+    @DeleteMapping(path = ["/delete/{id}"])
+    fun delete(@PathVariable id: Int): ResponseEntity<Car>{
+        carService.delete(id)
+        return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
 }
