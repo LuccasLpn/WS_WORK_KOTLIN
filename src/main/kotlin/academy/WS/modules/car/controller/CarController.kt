@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartException
+import org.springframework.web.multipart.MultipartFile
 import javax.validation.Valid
+import javax.validation.ValidationException
 
 @RestController
 @RequiredArgsConstructor
@@ -33,9 +36,18 @@ class CarController(val carService: CarService) {
     }
 
     @DeleteMapping(path = ["/delete/{id}"])
-    fun delete(@PathVariable id: Int): ResponseEntity<Car>{
+    fun delete(@PathVariable id: Int): ResponseEntity<Unit>{
         carService.delete(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
+    }
+
+    @PostMapping(path = ["/save/upload"])
+    fun uploadData(@RequestParam("file") file:MultipartFile): String{
+        return try {
+            carService.upload(file)
+        } catch (e: MultipartException) {
+            throw ValidationException("File Format")
+        }
     }
 
 }

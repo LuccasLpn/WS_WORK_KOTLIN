@@ -1,12 +1,19 @@
 package academy.WS.modules.car.service
 
 import academy.WS.modules.car.domain.Car
-import academy.WS.modules.car.request.CarPost
 import academy.WS.modules.car.mapper.CarMapper
 import academy.WS.modules.car.repository.CarRepository
+import academy.WS.modules.car.request.CarPost
 import academy.WS.modules.car.request.CarPut
 import academy.WS.modules.factory.service.FactoryService
+import com.univocity.parsers.common.record.Record
+import com.univocity.parsers.csv.CsvParser
+import com.univocity.parsers.csv.CsvParserSettings
 import org.springframework.stereotype.Service
+import org.springframework.web.multipart.MultipartFile
+import java.io.IOException
+import java.util.ArrayList
+import java.util.function.Consumer
 import javax.xml.bind.ValidationException
 
 @Service
@@ -22,7 +29,6 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         }
         return carRepository.save(car)
     }
-
     fun update(carPut: CarPut): Car{
         val savedCar = carPut.id?.let { findByIdOrThrowBadRequestException(it) }
         val  factory = carPut.factoryId?.let { factoryService.findByIdOrThrowBadRequestException(it) }
@@ -34,8 +40,37 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         return carRepository.save(car)
     }
 
-    fun delete(id: Int){
-        carRepository.delete(findByIdOrThrowBadRequestException(id))
+    fun upload(file: MultipartFile): String{
+        return try {
+            val carList: MutableList<Car> = ArrayList()
+            val inputStream = file.inputStream
+            val settings = CsvParserSettings()
+            settings.isHeaderExtractionEnabled = true
+            val parser = CsvParser(settings)
+            val parseAllRecords = parser.parseAllRecords(inputStream)
+            parseAllRecords.forEach(Consumer { record: Record ->
+                val factoryId =
+                    factoryService.findByIdOrThrowBadRequestException(record.getString("MARCA_ID").toInt())
+                val build = Car()
+                        build.id = record.getString("ID").toInt()
+                        build.factory = factoryId
+                        build.model = record.getString("MODELO")
+                        build.year = record.getString("ANO").toInt()
+                        build.fuel = record.getString("COMBUSTIVEL")
+                        build.doors = record.getString("NUM_PORTAS").toInt()
+                        build.cost = record.getString("VALOR_FIPE").toDouble()
+                        build.color = record.getString("COR")
+                carList.add(build)
+                carRepository.saveAll(carList)
+            })
+            "Upload SuccessFull !!!"
+        } catch (e: IOException) {
+            throw ValidationException("")
+        }
+    }
+
+    fun delete(id: Int): Unit{
+        return carRepository.delete(findByIdOrThrowBadRequestException(id))
     }
 
     fun findByIdOrThrowBadRequestException(id: Int): Car{
