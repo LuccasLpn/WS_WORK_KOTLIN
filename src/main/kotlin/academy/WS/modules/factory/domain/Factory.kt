@@ -10,7 +10,7 @@ class Factory {
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
     var name: String? = null
-    var country_code: String? = null
+    var countryCode: Int? = null
 
 }
 

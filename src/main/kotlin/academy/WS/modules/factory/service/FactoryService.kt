@@ -44,11 +44,15 @@ class FactoryService (val factoryRepository: FactoryRepository){
         return factoryRepository.findByNameIgnoreCaseContaining(name)
     }
 
+    fun findByCode(code: Int): List<Factory>{
+        return factoryRepository.findByCountryCode(code)
+    }
+
     private fun validateFactoryNameInformed(request: FactoryPost){
         if (ObjectUtils.isEmpty(request.name)){
             throw ValidationException("The Factory Name Was Not Informed")
         }
-        if (ObjectUtils.isEmpty(request.country_code)){
+        if (ObjectUtils.isEmpty(request.countryCode)){
             throw ValidationException("The Factory CountryCode Was Not Informed")
         }
 

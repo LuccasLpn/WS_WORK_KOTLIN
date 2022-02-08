@@ -52,6 +52,11 @@ class FactoryController(val factoryService: FactoryService) {
         return ResponseEntity.ok(factoryService.findByIdOrThrowBadRequestException(id))
     }
 
+    @GetMapping(path = ["/findByCode/{code}"])
+    fun findByCode(@PathVariable code: Int):ResponseEntity <List<Factory>>{
+        return ResponseEntity(factoryService.findByCode(code),HttpStatus.OK)
+    }
+
 
 
 }

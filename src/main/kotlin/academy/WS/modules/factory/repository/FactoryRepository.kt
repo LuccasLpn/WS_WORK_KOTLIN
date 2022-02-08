@@ -9,5 +9,6 @@ interface FactoryRepository : JpaRepository<Factory, Int> {
 
     fun findByNameIgnoreCase(name: String): List<Factory>
     fun findByNameIgnoreCaseContaining(name: String): List<Factory>
+    fun findByCountryCode(code: Int): List<Factory>
 
 }
