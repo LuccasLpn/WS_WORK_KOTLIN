@@ -33,13 +33,18 @@ class FactoryController(val factoryService: FactoryService) {
     }
 
     @GetMapping(path = ["/findAll"])
-    fun findAll() : ResponseEntity < List < Factory >>{
+    fun findAll() : ResponseEntity < List <Factory>>{
         return ResponseEntity(factoryService.findAll(),HttpStatus.OK)
     }
 
     @GetMapping(path = ["/findByName/{name}"])
     fun findByName(@PathVariable name: String):ResponseEntity <List<Factory>>{
         return ResponseEntity(factoryService.findByName(name),HttpStatus.OK)
+    }
+
+    @GetMapping(path = ["/findByNameContaining/{name}"])
+    fun findByNameContaining(@PathVariable name: String):ResponseEntity <List<Factory>>{
+        return ResponseEntity(factoryService.findByNameContaining(name),HttpStatus.OK)
     }
 
     @GetMapping(path = ["/findById/{id}"])

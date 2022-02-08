@@ -40,8 +40,9 @@ class FactoryService (val factoryRepository: FactoryRepository){
     fun findByName(name: String): List<Factory> {
         return factoryRepository.findByNameIgnoreCase(name)
     }
-
-
+    fun findByNameContaining(name: String): List<Factory> {
+        return factoryRepository.findByNameIgnoreCaseContaining(name)
+    }
 
     private fun validateFactoryNameInformed(request: FactoryPost){
         if (ObjectUtils.isEmpty(request.name)){
