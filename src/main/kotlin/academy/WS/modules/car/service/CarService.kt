@@ -1,10 +1,10 @@
 package academy.WS.modules.car.service
 
 import academy.WS.modules.car.domain.Car
-import academy.WS.modules.car.domain.CarPost
+import academy.WS.modules.car.request.CarPost
 import academy.WS.modules.car.mapper.CarMapper
 import academy.WS.modules.car.repository.CarRepository
-import academy.WS.modules.factory.domain.Factory
+import academy.WS.modules.car.request.CarPut
 import academy.WS.modules.factory.service.FactoryService
 import org.springframework.stereotype.Service
 import javax.xml.bind.ValidationException
@@ -22,7 +22,19 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         }
         return carRepository.save(car)
     }
-    
+
+    fun update(carPut: CarPut): Car{
+
+        val savedCar = carPut.id?.let { findByIdOrThrowBadRequestException(it) }
+        val  factory = carPut.factoryId?.let { factoryService.findByIdOrThrowBadRequestException(it) }
+        val car = CarMapper.INSTANCE.toPut(carPut)
+        if (factory != null && savedCar != null) {
+            car.id = savedCar.id
+            car.factory = factory
+        }
+        return carRepository.save(car)
+    }
+
     fun delete(id: Int){
         carRepository.delete(findByIdOrThrowBadRequestException(id))
     }

@@ -1,4 +1,4 @@
-package academy.WS.modules.car.domain
+package academy.WS.modules.car.request
 
 import academy.WS.modules.factory.domain.Factory
 import com.fasterxml.jackson.annotation.JsonIgnore

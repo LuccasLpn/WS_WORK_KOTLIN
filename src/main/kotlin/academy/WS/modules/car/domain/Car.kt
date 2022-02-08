@@ -9,23 +9,16 @@ import javax.persistence.*
 @Table(name = "TB_CAR")
 class Car {
 
-    fun factory(savedFactory: Factory?) {
-        if (savedFactory != null) {
-            savedFactory.id
-        }
-    }
 
     @field:Id
     @field:GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Int? = null
-
     @OneToOne(cascade = [(CascadeType.ALL)])
     @JoinColumn(name = "FACTORY_ID", referencedColumnName = "id")
     @JsonIgnore
     var factory: Factory = Factory()
         get(){ return field }
         set(value) { field = value }
-
     @Column(name = "MODELO")
     var model: String? = null
     @Column(name = "ANO")
