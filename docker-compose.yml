@@ -15,7 +15,6 @@ services:
     volumes:
       - wswork_data:/var/lib/mysql
     mem_limit: 512m
+
 volumes:
   wswork_data:
-
-
