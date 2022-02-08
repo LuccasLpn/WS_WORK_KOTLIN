@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface CarRepository: JpaRepository<Car, Int> {
+
+    fun findByCost(coost: Double): List<Car>
+
 }

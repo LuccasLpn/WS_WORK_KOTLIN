@@ -85,6 +85,10 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         return carRepository.findAll()
     }
 
+    fun findByCost(cost: Double): List<Car>{
+        return carRepository.findByCost(cost)
+    }
+
 
     private fun validateCarInformed(request: CarPost){
         if (ObjectUtils.isEmpty(request.doors)){

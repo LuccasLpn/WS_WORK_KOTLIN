@@ -16,34 +16,34 @@ import javax.validation.ValidationException
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = ["/api/car"])
-class CarController(val carService: CarService) {
+class CarController(val service: CarService) {
 
 
     @PostMapping(path = ["/save"])
     fun save(@RequestBody @Valid carPost: CarPost): ResponseEntity<Car>{
-        return ResponseEntity(carService.save(carPost), HttpStatus.CREATED)
+        return ResponseEntity(service.save(carPost), HttpStatus.CREATED)
     }
 
     @PutMapping(path = ["/update"])
     fun update(@RequestBody carPut: CarPut): ResponseEntity<Car>{
-        return ResponseEntity(carService.update(carPut), HttpStatus.NO_CONTENT)
+        return ResponseEntity(service.update(carPut), HttpStatus.NO_CONTENT)
     }
 
     @GetMapping(path = ["/findAll"])
     fun findAll() :ResponseEntity<List<Car>>{
-        return ResponseEntity(carService.findAll(),HttpStatus.OK)
+        return ResponseEntity(service.findAll(),HttpStatus.OK)
     }
 
     @DeleteMapping(path = ["/delete/{id}"])
     fun delete(@PathVariable id: Int): ResponseEntity<Unit>{
-        carService.delete(id)
+        service.delete(id)
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
     @PostMapping(path = ["/save/upload"])
     fun uploadData(@RequestParam("file") file:MultipartFile): String{
         return try {
-            carService.upload(file)
+            service.upload(file)
         } catch (e: MultipartException) {
             throw ValidationException("File Format")
         }
@@ -51,6 +51,11 @@ class CarController(val carService: CarService) {
 
     @GetMapping(path = ["/findById/{id}"])
     fun findById(@PathVariable id: Int): ResponseEntity<Car>{
-        return ResponseEntity.ok(carService.findByIdOrThrowBadRequestException(id))
+        return ResponseEntity.ok(service.findByIdOrThrowBadRequestException(id))
+    }
+
+    @GetMapping(path = ["/findByCost/{cost}"])
+    fun findByCost(@PathVariable cost: Double): ResponseEntity<List<Car>>{
+        return ResponseEntity(service.findByCost(cost),HttpStatus.OK)
     }
 }
