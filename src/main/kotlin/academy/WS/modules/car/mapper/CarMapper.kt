@@ -12,7 +12,6 @@ abstract class CarMapper {
     abstract fun toPost(carPost: CarPost): Car
     abstract fun toPut(carPut: CarPut): Car
 
-
     companion object {
         var INSTANCE = Mappers.getMapper(CarMapper::class.java)
     }
