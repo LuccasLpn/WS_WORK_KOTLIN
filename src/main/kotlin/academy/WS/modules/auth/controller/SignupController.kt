@@ -13,13 +13,14 @@ import javax.validation.Valid
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = ["/api/user"])
-class UserController (val userService: UserService){
+class SignupController (val userService: UserService){
 
 
     @PostMapping(path = ["/save"])
     fun saveUser(@RequestBody @Valid user: User): ResponseEntity<User>{
         return ResponseEntity(userService.save(user), HttpStatus.CREATED)
     }
-    
+
+
 
 }

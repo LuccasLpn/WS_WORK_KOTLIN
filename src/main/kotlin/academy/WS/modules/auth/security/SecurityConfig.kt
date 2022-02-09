@@ -26,18 +26,15 @@ class SecurityConfig: WebSecurityConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.csrf().disable().authorizeRequests()
             .antMatchers(HttpMethod.POST,"/api/user/save").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/factory/save").permitAll()
             .anyRequest().authenticated()
         http.addFilter(JWTAuthenticationFilter(authenticationManager(), jwtUtil = jwtUtil))
         http.addFilter(JWTAuthorizationFilter(authenticationManager(), jwtUtil = jwtUtil, userDetailService = userDetailsService))
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
     }
-
     @Bean
     fun bCryptPasswordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
     }
-
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder())
     }

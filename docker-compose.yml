@@ -5,7 +5,6 @@ x-database-variables: &database-variables
   SPRING_DATASOURCE_PASSWORD: root
 
 services:
-
   db:
     image: mysql
     container_name: wswork

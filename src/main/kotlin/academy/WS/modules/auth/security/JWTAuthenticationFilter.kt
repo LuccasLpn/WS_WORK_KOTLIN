@@ -26,19 +26,21 @@ class JWTAuthenticationFilter: UsernamePasswordAuthenticationFilter {
     override fun attemptAuthentication(request: HttpServletRequest, response: HttpServletResponse?): Authentication? {
         try {
             val (email, password) = ObjectMapper().readValue(request.inputStream, Credentials::class.java)
-
             val token = UsernamePasswordAuthenticationToken(email, password)
-
             return authenticationManager.authenticate(token)
         } catch (e: Exception) {
             throw UsernameNotFoundException("User not found!")
         }
     }
 
-    override fun successfulAuthentication(request: HttpServletRequest?, response: HttpServletResponse, chain: FilterChain?, authResult: Authentication) {
+    override fun successfulAuthentication(request: HttpServletRequest?,
+                                          response: HttpServletResponse,
+                                          chain: FilterChain?,
+                                          authResult: Authentication) {
         val username = (authResult.principal as UserDetailsImpl).username
         val token = username?.let { jwtUtil.generateToken(it) }
         response.addHeader(authorization, "$bearer $token")
     }
+
 
 }
