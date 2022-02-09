@@ -64,4 +64,14 @@ class CarController(val service: CarService) {
         return ResponseEntity(service.findByCor(cor),HttpStatus.OK)
     }
 
+    @GetMapping(path = ["/findByModel/{model}"])
+    fun findByModel(@PathVariable model:String): ResponseEntity<List<Car>>{
+        return ResponseEntity(service.findByModel(model),HttpStatus.OK)
+    }
+
+    @GetMapping(path = ["/findByYear/{year}"])
+    fun findByYear(@PathVariable year: Int): ResponseEntity<List<Car>>{
+        return ResponseEntity(service.findByYear(year),HttpStatus.OK)
+    }
+
 }

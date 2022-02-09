@@ -9,15 +9,11 @@ import javax.persistence.*
 class CarPost {
 
     fun factory(savedFactory: Factory?) {
-        if (savedFactory != null) {
-            savedFactory.id
-        }
+        savedFactory?.id
     }
 
     var id: Int? = null
     var factoryId: Int? = null
-        get(){ return field }
-        set(value) { field = value }
     var model: String? = null
     var year: Int? = null
     var fuel: String? = null

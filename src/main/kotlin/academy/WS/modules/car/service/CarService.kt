@@ -93,6 +93,13 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         return carRepository.findByColorIgnoreCase(cor)
     }
 
+    fun findByModel(model:String):List<Car>{
+        return carRepository.findByModel(model)
+    }
+    fun findByYear(year: Int):List<Car>{
+        return carRepository.findByYear(year)
+    }
+
 
     private fun validateCarInformed(request: CarPost){
         if (ObjectUtils.isEmpty(request.doors)){
