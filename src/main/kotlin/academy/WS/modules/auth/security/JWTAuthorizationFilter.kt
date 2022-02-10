@@ -13,19 +13,19 @@ import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@RequiredArgsConstructor
-class JWTAuthorizationFilter(
-    authenticationManager: AuthenticationManager,
-    var jwtUtil: JWTUtil,
-    var userDetailService: UserDetailsService
+class JWTAuthorizationFilter : BasicAuthenticationFilter {
 
-) : BasicAuthenticationFilter(authenticationManager) {
+    private var jwtUtil: JWTUtil
+    private var userDetailService: UserDetailsService
 
-    override fun doFilterInternal(request: HttpServletRequest,
-                                  response: HttpServletResponse,
-                                  chain: FilterChain) {
+    constructor(authenticationManager: AuthenticationManager, jwtUtil: JWTUtil, userDetailService: UserDetailsService) : super(authenticationManager) {
+        this.jwtUtil = jwtUtil
+        this.userDetailService = userDetailService
+    }
 
+    override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
         val authorizationHeader = request.getHeader(authorization)
+
         if(authorizationHeader.startsWith(bearer)) {
             val auth = getAuthentication(authorizationHeader)
             SecurityContextHolder.getContext().authentication = auth

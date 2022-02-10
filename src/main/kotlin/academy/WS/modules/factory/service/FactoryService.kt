@@ -1,7 +1,7 @@
 package academy.WS.modules.factory.service
 
 import academy.WS.modules.factory.domain.Factory
-import academy.WS.modules.factory.mapper.FactoryMapper
+import academy.WS.modules.factory.domain.mapper.FactoryMapper
 import academy.WS.modules.factory.repository.FactoryRepository
 import academy.WS.modules.factory.request.FactoryPost
 import academy.WS.modules.factory.request.FactoryPut

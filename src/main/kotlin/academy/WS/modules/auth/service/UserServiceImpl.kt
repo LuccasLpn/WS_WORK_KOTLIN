@@ -10,15 +10,10 @@ import org.springframework.stereotype.Service
 
 @Service
 @RequiredArgsConstructor
-class UserServiceImpl : UserDetailsService{
-
-
-    private lateinit var userRepository: UserRepository
-
+class UserServiceImpl(val userRepository: UserRepository) : UserDetailsService{
 
     override fun loadUserByUsername(email: String?): UserDetails {
-        val user = email?.let { userRepository.findByEmail(it) } ?: throw UsernameNotFoundException(email)
+        val user = userRepository.findByEmail(email) ?: throw UsernameNotFoundException(email)
         return UserDetailsImpl(user)
     }
-
 }

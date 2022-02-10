@@ -11,9 +11,9 @@ import java.util.*
 class JWTUtil {
 
     @Value("\${jwt.secret}")
-    lateinit var secret: String
+    private lateinit var secret: String
 
-    val expiration: Long = 60000
+    private val expiration: Long = 60000
 
     fun generateToken(username: String): String {
         return Jwts.builder()
@@ -35,6 +35,7 @@ class JWTUtil {
         }
         return false
     }
+
 
     private fun getClaimsToken(token: String): Claims? {
         return try {

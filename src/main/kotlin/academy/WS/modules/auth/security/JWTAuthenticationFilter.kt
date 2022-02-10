@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse
 
 class JWTAuthenticationFilter: UsernamePasswordAuthenticationFilter {
 
-    var jwtUtil: JWTUtil
+    private var jwtUtil: JWTUtil
 
     constructor(authenticationManager: AuthenticationManager, jwtUtil: JWTUtil) : super() {
         this.authenticationManager = authenticationManager
@@ -35,12 +35,12 @@ class JWTAuthenticationFilter: UsernamePasswordAuthenticationFilter {
 
     override fun successfulAuthentication(request: HttpServletRequest?,
                                           response: HttpServletResponse,
-                                          chain: FilterChain?,
-                                          authResult: Authentication) {
+                                          chain: FilterChain?, authResult:
+                                          Authentication) {
+
         val username = (authResult.principal as UserDetailsImpl).username
-        val token = username?.let { jwtUtil.generateToken(it) }
+        val token = jwtUtil.generateToken(username)
         response.addHeader(authorization, "$bearer $token")
     }
-
 
 }
