@@ -26,6 +26,9 @@ repositories {
 
 dependencies {
 
+
+	implementation("org.springdoc:springdoc-openapi-ui:1.5.12")
+	implementation("commons-io:commons-io:2.6")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("io.jsonwebtoken:jjwt:0.9.1")
 	implementation("org.springframework.boot:spring-boot-devtools:2.6.3")

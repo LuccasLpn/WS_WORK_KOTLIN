@@ -9,6 +9,7 @@ import academy.WS.modules.factory.service.FactoryService
 import com.univocity.parsers.common.record.Record
 import com.univocity.parsers.csv.CsvParser
 import com.univocity.parsers.csv.CsvParserSettings
+import org.apache.commons.io.FilenameUtils
 import org.springframework.stereotype.Service
 import org.springframework.util.ObjectUtils
 import org.springframework.web.multipart.MultipartFile
@@ -44,6 +45,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
 
     fun upload(file: MultipartFile): String{
         return try {
+
             val carList: MutableList<Car> = ArrayList()
             val inputStream = file.inputStream
             val settings = CsvParserSettings()
@@ -65,6 +67,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
                 carList.add(build)
                 carRepository.saveAll(carList)
             })
+
             "Upload SuccessFull !!!"
         } catch (e: IOException) {
             throw ValidationException("")
@@ -74,7 +77,6 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
     fun delete(id: Int): Unit{
         return carRepository.delete(findByIdOrThrowBadRequestException(id))
     }
-
 
     fun findByIdOrThrowBadRequestException(id: Int): Car{
         return carRepository.findById(id)
@@ -121,9 +123,7 @@ class CarService(val carRepository: CarRepository, val factoryService: FactorySe
         if (ObjectUtils.isEmpty(request.fuel)){
             throw ValidationException("The Car Fuel Was Not Informed")
         }
-
     }
-
 
 
 

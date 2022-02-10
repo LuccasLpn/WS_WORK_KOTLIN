@@ -4,6 +4,7 @@ import academy.WS.modules.car.domain.Car
 import academy.WS.modules.car.request.CarPost
 import academy.WS.modules.car.request.CarPut
 import academy.WS.modules.car.service.CarService
+import io.swagger.v3.oas.annotations.Operation
 import lombok.RequiredArgsConstructor
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -40,14 +41,19 @@ class CarController(val service: CarService) {
         return ResponseEntity(HttpStatus.NO_CONTENT)
     }
 
+
+    @Operation(
+        summary = "Upload CSV/XLSX", description = "ID-MARCA_ID-MARCA_NOME-MODELO-ANO-COMBUSTIVEL-NUM_PORTAS-VALOR_FIPE-COR"
+    )
     @PostMapping(path = ["/save/upload"])
-    fun uploadData(@RequestParam("file") file:MultipartFile): String{
+    fun uploadData(@RequestParam("file") file: MultipartFile): String{
         return try {
             service.upload(file)
         } catch (e: MultipartException) {
-            throw ValidationException("File Format")
+            throw ValidationException("File Format Not Supported")
         }
     }
+
 
     @GetMapping(path = ["/findById/{id}"])
     fun findById(@PathVariable id: Int): ResponseEntity<Car>{

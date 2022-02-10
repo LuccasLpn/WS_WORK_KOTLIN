@@ -4,6 +4,8 @@ server:
 
 spring:
 
+
+
   application:
     name: springBoot
   datasource:
@@ -13,10 +15,14 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+  mvc:
+    pathpattern:
+      matching-strategy:
+        ant-path-matcher:
 jwt:
   secret: WSWORKPORJECTKOTLIN

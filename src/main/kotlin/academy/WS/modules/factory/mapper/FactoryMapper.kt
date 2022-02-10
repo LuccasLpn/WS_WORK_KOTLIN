@@ -1,4 +1,4 @@
-package academy.WS.modules.factory.domain.mapper
+package academy.WS.modules.factory.mapper
 
 import academy.WS.modules.factory.domain.Factory
 import academy.WS.modules.factory.request.FactoryPost

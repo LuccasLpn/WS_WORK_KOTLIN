@@ -7,6 +7,7 @@ class CarPut {
     fun factory(savedFactory: Factory?) {
         savedFactory?.id
     }
+
     var factoryId: Int? = null
     var id: Int? = null
     var model: String? = null
