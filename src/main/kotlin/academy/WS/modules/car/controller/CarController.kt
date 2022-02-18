@@ -43,7 +43,8 @@ class CarController(val service: CarService) {
 
 
     @Operation(
-        summary = "Upload CSV/XLSX", description = "ID-MARCA_ID-MARCA_NOME-MODELO-ANO-COMBUSTIVEL-NUM_PORTAS-VALOR_FIPE-COR"
+        summary = "Upload CSV/XLSX",
+        description = "ID--MARCA_ID--MARCA_NOME--MODELO--ANO--COMBUSTIVEL--NUM_PORTAS--VALOR_FIPE--COR"
     )
     @PostMapping(path = ["/save/upload"])
     fun uploadData(@RequestParam("file") file: MultipartFile): String{
